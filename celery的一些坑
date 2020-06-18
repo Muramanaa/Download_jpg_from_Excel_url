@@ -1,0 +1,16 @@
+demo测试:
+坑1：redis 命令行启动后需一直开着
+坑2：配置项目中文件命名有celery, 在celery.py中调用celery库之前，需加绝对引用。
+from future import absolute_import, unicode_literals
+from celery import Celery
+坑3：Python引入同级包pycharm报错
+flask+celery：
+坑4：‘Flask’ object has no attribute ‘user_options’
+解决方法：
+celery -A app worker --loglevel=info换成
+celery -A app.celery（app路径下实例化celery的名字） worker --loglevel=info
+坑5：
+API_file.tasks.celery 或XXX not register
+celery 启动时，任务和API中启动的任务必须一致。
+若接口调用的任务没有上层API_file这个目录，则激活celery时，需进入相应的API_file文件夹中，再启动单独的tasks.celery的任务。 
+若接口调用的有上级目录，celery激活时，就在大文件夹下启动API_file.tasks.celery任务。
